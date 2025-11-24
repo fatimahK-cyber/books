@@ -18,6 +18,8 @@
                             <th class="text center col-2">Status</th>
                             <th class="text center col-2">Rating</th>
                             <th class="text center col-2">Review</th>
+                            <th class="text center col-1">Edit</th>
+                            <th class="text center col-1">Delete</th>
                     
                         </tr>
 
@@ -30,10 +32,19 @@
                                 <td class="text center col-2"><%= bookList[count].rating %></td>
                                 <td class="text center col-2"><%= bookList[count].review %></td>
                                 
+                                <td class="text center col-1">
+                                <a href = "/books/edit/<%= bookList[count]._id %>" class="btn btn-primary btn-sm m-1">Edit</a>
+                                </td>   
 
+                                <td class="text center col-1">
+                                <a href = "/books/delete/<%= bookList[count]._id %>" class="btn btn-danger btn-sm m-1">Delete</a>
+                                </td>
                             </tr>
 
+
                         <% } %>
+
+
 
 
                     </table>

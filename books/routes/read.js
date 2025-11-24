@@ -62,22 +62,38 @@ router.post('/add', async(req, res, next)=> {
 router.get('/edit/:id', async(req, res, next)=> {
     try
     {
-        res.render('add', {title: 'Add Book'});
+        const id = req.params.id;
+        const bookToEdit = await Book.findById(id);
+        res.render('edit', {
+            title: 'Edit Book',
+             book: bookToEdit
+            });
     }
     catch(err) {
         console.error(err);
-        res.render('add', {
-            error: 'Error on Server'
-        })
+        next(err);
+        }
     }
-    });
+    );
 
 
 /* post the route for update  - create operation*/
 router.post('/edit/:id', async(req, res, next)=> {
     try
     {
-        res.render('add', {title: 'Add Book'});
+        let id = req.params.id;
+        let updatedBook = Book({
+            "_id": id,
+            "title": req.body.title,
+            "author": req.body.author,
+            "genre": req.body.genre,
+            "status": req.body.status,
+            "rating": req.body.rating,
+            "review": req.body.review,
+        });
+        Book.findByIdAndUpdate(id, updatedBook).then(()=>{
+            res.redirect('/books');
+        });
     }
     catch(err) {
         console.error(err);
