@@ -1,13 +1,13 @@
 <% include ../partials/header %>
 
 <main class="container">
-    <%  if(message.length > 0) { %>
-        <div class="alert alert-danger mt-3"><%= message %>
-        
+    <% if(message.length > 0) { %>
+        <div class="alert alter danger">
+            <%= message %>
         </div>
-    <% } %>
+    <%}%>
 
-    <div class="row justify-content-center mt-5">
+    <div class="row ">
         <div class="col-md-6">
             <h2 class="text-center mb-4">Please Login</h2>
             <form autocomplete="off"  method="POST">
