@@ -1,1 +1,45 @@
 <% include partials/header %>
+
+<main class="container mt-5">
+  <h1><%= title %></h1>
+  <form id ="form" action="/books/add" method="POST">
+    <div class="form-group">
+      <label for="title">Book Title</label>
+      <input type="text" class="form-control" id="title" name="title" required 
+      placeholder="Enter the book title"
+      > 
+
+    </div>
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input type="text" class="form-control" id="author" name="author" required
+       placeholder="Enter the author's name">
+    </div>
+    <div class="form-group">
+      <label for="genre">Genre</label>
+      <input type="text" class="form-control" id="genre" name="genre" required
+        placeholder="Enter the book genre">
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input type="text" class="form-control" id="status" name="status" required
+        placeholder="Enter the reading status">
+    </div>
+    <div class="form-group">
+      <label for="rating">Rating</label>
+      <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required
+        placeholder="Enter your rating (1-5)">
+    </div>
+    <div class="form-group">
+      <label for="review">Review</label>
+      <textarea class="form-control" id="review" name="review" rows="3" required
+        placeholder="Enter your review"></textarea>
+    </div>
+    <br>
+    <button id ="submit" type="submit" class="btn btn-primary">Add Book</button>
+    
+    <a href="/books" class="btn btn-secondary">Cancel</a>
+
+
+  </form>
+</main>

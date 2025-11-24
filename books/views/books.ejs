@@ -1,1 +1,45 @@
 <% include partials/header %>
+
+    <body>
+
+        <main class="container mt-5">
+            <div class="row">
+                <div class = "offset-md-1 col-md-10">
+                    <h1><%= title %></h1>
+                    <p>Add a New Book to Your Reading List!</p>
+                    
+                    <br>
+                    <table class ="table table-bordered table-striped table-hover ">
+                        
+                        <tr class = "d-flex">
+                            <th class="text center col-2">Title</th>
+                            <th class="text center col-2">Author</th>
+                            <th class="text center col-2">Genre</th>
+                            <th class="text center col-2">Status</th>
+                            <th class="text center col-2">Rating</th>
+                            <th class="text center col-2">Review</th>
+                    
+                        </tr>
+
+                        <% for(let count = 0; count < bookList.length; count++) { %>
+                            <tr class = "d-flex">
+                                <td class="text center col-2"><%= bookList[count].title %></td>
+                                <td class="text center col-2"><%= bookList[count].author %></td>
+                                <td class="text center col-2"><%= bookList[count].genre %></td>
+                                <td class="text center col-2"><%= bookList[count].status %></td>
+                                <td class="text center col-2"><%= bookList[count].rating %></td>
+                                <td class="text center col-2"><%= bookList[count].review %></td>
+                                
+
+                            </tr>
+
+                        <% } %>
+
+
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </body> 
+

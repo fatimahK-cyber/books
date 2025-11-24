@@ -10,8 +10,5 @@ router.get('/add', function(req, res, next) {
   res.render('add', { title: 'add' });
 });
 
-router.get('/books', function(req, res, next) {
-  res.render('books', { title: 'books' });
-});
 
 module.exports = router;
