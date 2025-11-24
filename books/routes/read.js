@@ -27,11 +27,11 @@ router.get('/add', async(req, res, next)=> {
     }
     catch(err) {
         console.error(err);
-        res.render('add', {
-            error: 'Error on Server'
-        })
-    }
-    });
+        next(err);
+        }
+    
+    })
+
 
 /* post the data  - create operation*/
 router.post('/add', async(req, res, next)=> {
@@ -51,11 +51,10 @@ router.post('/add', async(req, res, next)=> {
     }
     catch(err) {
         console.error(err);
-        res.render('add', {
-            error: 'Error on Server'
-        })
-    }
-    });
+        next(err);
+        }
+    
+    })
 
 
 /* get the route for update  - update operation*/
@@ -74,7 +73,7 @@ router.get('/edit/:id', async(req, res, next)=> {
         next(err);
         }
     }
-    );
+    )
 
 
 /* post the route for update  - create operation*/
@@ -97,26 +96,28 @@ router.post('/edit/:id', async(req, res, next)=> {
     }
     catch(err) {
         console.error(err);
-        res.render('add', {
-            error: 'Error on Server'
-        })
-    }
-    });
+        next(err);
+        }
+    
+    })
 
 
 /* get the route for performing delete  - delete operation*/
 router.get('/delete/:id', async(req, res, next)=> {
     try
     {
-        res.render('add', {title: 'Add Book'});
+        let id = req.params.id;
+        Book.deleteOne({_id: id}).then(()=>{
+            res.redirect('/books');
+        })
     }
     catch(err) {
         console.error(err);
-        res.render('add', {
-            error: 'Error on Server'
-        })
-    }
-    });
+        next(err);
+        }
+    
+    })
+
 
 
 
