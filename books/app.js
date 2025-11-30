@@ -97,7 +97,8 @@ passport.use(new GitHubStrategy({
         user = new User({
           username: profile.username,
           displayName: profile.displayName || profile.username,
-          githubId: profile.id
+          githubId: profile.id,
+          email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : undefined
         });
         await user.save();
       }
