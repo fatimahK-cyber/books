@@ -89,20 +89,24 @@ passport.use(new GitHubStrategy({
     clientSecret: 'b0d9a6debc2beb4e2ec8afd89ff90fa7b9cadc4c',
     callbackURL: 'https://books-q5q7.onrender.com/auth/github/callback'
   },
-  async (accessToken, refreshToken, profile, done) => {
+  async function(accessToken, refreshToken, profile, done) {
     try {
+      // GitHub may not return email
+      const email = profile.emails && profile.emails[0] ? profile.emails[0].value : undefined;
+
+      // Check if user exists
       let user = await User.findOne({ githubId: profile.id });
 
       if (!user) {
+        // If email is required in schema, you must provide a placeholder or make field optional
         user = new User({
           username: profile.username,
           displayName: profile.displayName || profile.username,
           githubId: profile.id,
-          email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : undefined
+          email: email || `${profile.username}@github.com` // placeholder if no email
         });
         await user.save();
       }
-
       return done(null, user);
     } catch (err) {
       return done(err, null);
