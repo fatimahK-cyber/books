@@ -1,23 +1,19 @@
-
 <% include partials/header %>
 
-<!DOCTYPE html>
-<html>
+<h1><%= title %></h1>
+<p>Your Personal Reading List Organized!</p>
 
-  <body>
+<% if (displayName) { %>
+  <a href="/add" class="btn btn-primary">Add a New Book</a>
+<% } else { %>
+  <a href="/login" class="btn btn-primary">Login to Add a New Book</a>
+<% } %>
 
-    <h1><%= title %></h1>
-    <p>Your Personal Reading List Organized!</p>
+<% if (displayName) { %>
+  <a href="/books" class="btn btn-secondary">View My Books</a>
+<% } else { %>
+  <a href="/login" class="btn btn-secondary">Login to View Your Books</a>
+<% } %>
 
-     <a href="/add" class="btn btn-primary">Add a New Book</a>
-     <br><br>
-    <a href="/books" class="btn btn-secondary">View My Books</a>
-
-  </body>
-
-</html>
 
 <% include partials/footer %>
-
- 
-

@@ -3,134 +3,114 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let Book = require('../models/booklist');
 
+// Middleware to protect routes
 function requireAuth(req, res, next) {
-    // check if the user is logged in
-    if(!req.isAuthenticated()) {
+    if (!req.isAuthenticated()) {
         return res.redirect('/login');
     }
     next();
 }
 
-//CRUD Operations
+// ----------------- CRUD Operations ----------------- //
 
-/* READ */
-router.get('/', async(req, res, next)=> {
+// READ - show all books
+router.get('/', requireAuth, async (req, res, next) => {
     try {
         const bookList = await Book.find();
-        res.render('books', {title: 'Books', bookList: bookList, displayName: req.user ? req.user.displayName : ""});
-
-    }
-    catch(err) {
-        console.error(err);
-        res.render('books', {
-            error: 'Error on Server'
-        })
-    }
-})
-/* get the data  - create operation*/
-router.get('/add', async(req, res, next)=> {
-    try
-    {
-        res.render('add', {title: 'Add Book', displayName: req.user ? req.user.displayName : ""});
-    }
-    catch(err) {
-        console.error(err);
-        next(err);
-        }
-    
-    })
-
-
-/* post the data  - create operation*/
-router.post('/add', async(req, res, next)=> {
-    try
-    {
-        let newBook = Book({
-            "title": req.body.title,
-            "author": req.body.author,
-            "genre": req.body.genre,
-            "status": req.body.status,
-            "rating": req.body.rating,
-            "review": req.body.review,
+        res.render('books', { 
+            title: 'Books', 
+            bookList: bookList, 
+            displayName: req.user ? req.user.displayName : "" 
         });
-        Book.create(newBook).then(()=>{
-            res.redirect('/books');
+    } catch (err) {
+        console.error(err);
+        res.render('books', { 
+            title: 'Books', 
+            bookList: [], 
+            displayName: req.user ? req.user.displayName : "", 
+            error: 'Error on Server' 
         });
     }
-    catch(err) {
+});
+
+// ADD - get form
+router.get('/add', requireAuth, async (req, res, next) => {
+    try {
+        res.render('add', { 
+            title: 'Add Book', 
+            displayName: req.user ? req.user.displayName : "" 
+        });
+    } catch (err) {
         console.error(err);
         next(err);
-        }
-    
-    })
+    }
+});
 
+// ADD - post form
+router.post('/add', requireAuth, async (req, res, next) => {
+    try {
+        let newBook = new Book({
+            title: req.body.title,
+            author: req.body.author,
+            genre: req.body.genre,
+            status: req.body.status,
+            rating: req.body.rating,
+            review: req.body.review,
+        });
+        await Book.create(newBook);
+        res.redirect('/books');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
 
-/* get the route for update  - update operation*/
-router.get('/edit/:id', async(req, res, next)=> {
-    try
-    {
+// EDIT - get form
+router.get('/edit/:id', requireAuth, async (req, res, next) => {
+    try {
         const id = req.params.id;
         const bookToEdit = await Book.findById(id);
         res.render('edit', {
             title: 'Edit Book',
-             book: bookToEdit,
-                displayName: req.user ? req.user.displayName : ""
-            });
-    }
-    catch(err) {
-        console.error(err);
-        next(err);
-        }
-    }
-    )
-
-
-/* post the route for update  - create operation*/
-router.post('/edit/:id', async(req, res, next)=> {
-    try
-    {
-        let id = req.params.id;
-        let updatedBook = Book({
-            "_id": id,
-            "title": req.body.title,
-            "author": req.body.author,
-            "genre": req.body.genre,
-            "status": req.body.status,
-            "rating": req.body.rating,
-            "review": req.body.review,
+            book: bookToEdit,
+            displayName: req.user ? req.user.displayName : ""
         });
-        Book.findByIdAndUpdate(id, updatedBook).then(()=>{
-            res.redirect('/books');
-        });
-    }
-    catch(err) {
+    } catch (err) {
         console.error(err);
         next(err);
-        }
-    
-    })
-
-
-/* get the route for performing delete  - delete operation*/
-router.get('/delete/:id', async(req, res, next)=> {
-    try
-    {
-        let id = req.params.id;
-        Book.deleteOne({_id: id}).then(()=>{
-            res.redirect('/books');
-        })
     }
-    catch(err) {
-    
+});
+
+// EDIT - post form
+router.post('/edit/:id', requireAuth, async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const updatedBook = {
+            title: req.body.title,
+            author: req.body.author,
+            genre: req.body.genre,
+            status: req.body.status,
+            rating: req.body.rating,
+            review: req.body.review,
+        };
+        await Book.findByIdAndUpdate(id, updatedBook);
+        res.redirect('/books');
+    } catch (err) {
         console.error(err);
         next(err);
-        }
-    
-    })
+    }
+});
 
-
-
-
-
+// DELETE - remove book
+router.get('/delete/:id', requireAuth, async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        await Book.deleteOne({ _id: id });
+        res.redirect('/books');
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
 
 module.exports = router;

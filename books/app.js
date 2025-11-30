@@ -60,7 +60,7 @@ passport.use(
     {
       clientID: "1097298382137-eh0disj30snshngabsh09dorot84kv1n.apps.googleusercontent.com",
       clientSecret: "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",
-      callbackURL: "http://127.0.0.1:3000/callback"
+      callbackURL: "http://127.0.0.1:3000/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
