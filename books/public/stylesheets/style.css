@@ -7,7 +7,7 @@ a {
   color: #00B7FF;
 }
 
-#submit #newbook{
+#submit{
   padding: 10px 20px;
   background-color: #712e2e6b;
   border-color: #712e2e6b;
@@ -19,3 +19,10 @@ a {
   padding: 10px 20px;
 }
 
+
+#newbook 
+{
+  padding: 10px 20px;
+  background-color: #712e2e6b;
+  border-color: #712e2e6b;
+}
