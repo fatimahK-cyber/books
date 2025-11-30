@@ -1,20 +1,22 @@
 <% include partials/header %>
 
-<div class="container mt-5">
-  <div class="card mb-3">
-    <img src="images\brownbooks.jpg" class="card-img-top" alt="Card image"> 
-    <div class="card-body text-center">
-      <h5 class="card-title">Your Personal Reading List, Organized!</h5>
-      <div class="mt-3">
-        <% if (displayName) { %>
-          <a href="/add" id = "newbook" class="btn btn-primary mb-2">Add a New Book</a>
-          <a href="/books" class="btn btn-secondary">View My Books</a>
-        <% } else { %>
-          <a href="/login" id = "newbooklogin" class="btn btn-primary mb-2">Login to Add a New Book</a>
-          <a href="/login" class="btn btn-secondary">Login to View Your Books</a>
-        <% } %>
-      </div>
+<div class="container mt-5 pt-5">
+  <div class="card text-center">
+    <div class="card-body">
+      <h5 class="card-title">Your Personal Reading List Organized!</h5>
+      
+      <!-- Buttons inside the card -->
+      <% if (displayName) { %>
+        <a href="/add" id= "newbook" class="btn btn-primary m-2">Add a New Book</a>
+        <a href="/books" class="btn btn-secondary m-2">View My Books</a>
+      <% } else { %>
+        <a href="/login" id = "newbooklogin" class="btn btn-primary m-2">Login to Add a New Book</a>
+        <a href="/login" class="btn btn-secondary m-2">Login to View Your Books</a>
+      <% } %>
+      
     </div>
+    <!-- Placeholder for the image at the bottom -->
+    <img src="images\brownbooks.jpg" class="card-img-bottom" alt="...">
   </div>
 </div>
 
