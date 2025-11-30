@@ -1,5 +1,5 @@
 <% 
-  // Provide default values if not defined
+  // Default values
   const pageTitle = typeof title !== 'undefined' ? title : '';
   const userDisplayName = typeof displayName !== 'undefined' ? displayName : '';
 %>
@@ -18,42 +18,46 @@
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #712e2e6b;">
       <a class="navbar-brand" href="/"> <i class="fa-solid fa-book-open"></i> Readist</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          
+
+          <!-- Home -->
           <li class="nav-item">
-            <% if (pageTitle === "Readist") { %>
-              <a class="nav-link active" href="/"> <i class="fa-solid fa-house"></i> Home <span class="sr-only"></span></a>
+            <% if (pageTitle === "Home" || pageTitle === "Readist") { %>
+              <a class="nav-link active" href="/"> <i class="fa-solid fa-house"></i> Home</a>
             <% } else { %>
               <a class="nav-link" href="/"><i class="fa-regular fa-house"></i> Home</a>
             <% } %>
           </li>
-          
+
+          <!-- Add a Book -->
+          <% if (userDisplayName) { %>
           <li class="nav-item">
-            <% if(userDisplayName) { %>
-              <% if (pageTitle === "add") { %>
-                <a class="nav-link active" href="/add"> <i class="fa-solid fa-square-plus"></i> Add a Book</a>
-              <% } else { %>
-                <a class="nav-link" href="/add"><i class="fa-regular fa-square-plus"></i> Add a Book</a>
-              <% } %>
+            <% if (pageTitle === "Add") { %>
+              <a class="nav-link active" href="/add"><i class="fa-solid fa-square-plus"></i> Add a Book</a>
+            <% } else { %>
+              <a class="nav-link" href="/add"><i class="fa-regular fa-square-plus"></i> Add a Book</a>
             <% } %>
           </li>
+          <% } %>
 
+          <!-- My Books -->
+          <% if (userDisplayName) { %>
           <li class="nav-item">
-            <% if(userDisplayName) { %>
-              <% if (pageTitle === "books") { %>
-                <a class="nav-link active" href="/books"><i class="fa-solid fa-bookmark"></i> My Books</a>
-              <% } else { %>
-                <a class="nav-link" href="/books"><i class="fa-regular fa-bookmark"></i> My Books</a>
-              <% } %>
+            <% if (pageTitle === "Books") { %>
+              <a class="nav-link active" href="/books"><i class="fa-solid fa-bookmark"></i> My Books</a>
+            <% } else { %>
+              <a class="nav-link" href="/books"><i class="fa-regular fa-bookmark"></i> My Books</a>
             <% } %>
           </li>
+          <% } %>
 
-          <% if(userDisplayName) { %>
-            <li class="navbar-text">
+          <!-- User Info / Login -->
+          <% if (userDisplayName) { %>
+            <li class="navbar-text mx-2">
               <i class="fas fa-lg fa-user"></i>
               Welcome, <%= userDisplayName %>
             </li>
