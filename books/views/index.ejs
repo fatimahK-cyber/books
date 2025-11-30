@@ -1,19 +1,21 @@
 <% include partials/header %>
 
-<h1><%= title %></h1>
-<p>Your Personal Reading List Organized!</p>
-
-<% if (displayName) { %>
-  <a href="/add" class="btn btn-primary">Add a New Book</a>
-<% } else { %>
-  <a href="/login" class="btn btn-primary">Login to Add a New Book</a>
-<% } %>
-
-<% if (displayName) { %>
-  <a href="/books" class="btn btn-secondary" id = "newbook">View My Books</a>
-<% } else { %>
-  <a href="/login" class="btn btn-secondary">Login to View Your Books</a>
-<% } %>
-
+<div class="container mt-5">
+  <div class="card mb-3">
+    <img src="images\brownbooks.jpg" class="card-img-top" alt="Card image"> 
+    <div class="card-body text-center">
+      <h5 class="card-title">Your Personal Reading List, Organized!</h5>
+      <div class="mt-3">
+        <% if (displayName) { %>
+          <a href="/add" id = "newbook" class="btn btn-primary mb-2">Add a New Book</a>
+          <a href="/books" class="btn btn-secondary">View My Books</a>
+        <% } else { %>
+          <a href="/login" id = "newbooklogin" class="btn btn-primary mb-2">Login to Add a New Book</a>
+          <a href="/login" class="btn btn-secondary">Login to View Your Books</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <% include partials/footer %>
