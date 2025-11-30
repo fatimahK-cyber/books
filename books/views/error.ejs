@@ -1,5 +1,20 @@
+<% 
+  // Set default values if undefined
+  const pageTitle = typeof title !== 'undefined' ? title : 'Error';
+  const pageMessage = typeof message !== 'undefined' ? message : 'An error occurred';
+  const errorStatus = error && error.status ? error.status : '';
+  const errorStack = error && error.stack ? error.stack : '';
+%>
+
 <% include partials/header %>
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+
+<main class="container mt-5">
+  <h1><%= pageTitle %></h1>
+  <h2><%= errorStatus %></h2>
+  <p><%= pageMessage %></p>
+  <% if (errorStack) { %>
+    <pre><%= errorStack %></pre>
+  <% } %>
+</main>
+
 <% include partials/footer %>

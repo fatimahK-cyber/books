@@ -1,45 +1,24 @@
-// Bring in mongoose and passport-local-mongoose
-let mongoose = require('mongoose');
-let passportLocalMongoose = require('passport-local-mongoose');
+const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose').default;
 
-// Set up how a user will be stored in the database
-let userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Username is required'
-    },
-    email: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Email is required'
-    },
-    displayName: {
-        type: String,
-        default: '',
-        trim: true,
-        required: 'Display Name is required'
-    },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    updated: {
-        type: Date,
-        default: Date.now
-    }
+
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: 'Username is required', trim: true },
+    email: { type: String, required: 'Email is required', trim: true },
+    displayName: { type: String, required: 'Display Name is required', trim: true },
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, {
     collection: 'users'
 });
 
-// Settings for the authentication plugin
-let options = { missingPasswordError: 'Wrong / Missing Password' };
-userSchema.plugin(passportLocalMongoose, options);
+// Use passport-local-mongoose correctly with v9+
+userSchema.plugin(passportLocalMongoose, {
+    usernameField: "username",
+    errorMessages: {
+        MissingPasswordError: 'Wrong / Missing Password'
+    }
+});
 
-// Create the user model
 const User = mongoose.model('User', userSchema);
-
-// Export the model
 module.exports = { User };
