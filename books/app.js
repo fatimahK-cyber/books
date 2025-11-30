@@ -81,7 +81,7 @@ passport.use(
   )
 );
 
-// GitHub OAuth Strategy
+// GitHub OAuth Strategy - updated for Mongoose 7
 const GitHubStrategy = require('passport-github2').Strategy;
 
 passport.use(new GitHubStrategy({
@@ -89,22 +89,26 @@ passport.use(new GitHubStrategy({
     clientSecret: 'b0d9a6debc2beb4e2ec8afd89ff90fa7b9cadc4c',
     callbackURL: 'https://books-q5q7.onrender.com/auth/github/callback'
   },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOne({ githubId: profile.id }, function(err, user) {
-      if (err) return done(err);
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      let user = await User.findOne({ githubId: profile.id });
+
       if (!user) {
-        const newUser = new User({
+        user = new User({
           username: profile.username,
           displayName: profile.displayName || profile.username,
           githubId: profile.id
         });
-        newUser.save(err => done(err, newUser));
-      } else {
-        return done(null, user);
+        await user.save();
       }
-    });
+
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
   }
 ));
+
 
 
 //initialize passport
