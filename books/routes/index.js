@@ -114,4 +114,18 @@ router.get(
   }
 );
 
+
+
+// Start GitHub login
+router.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+// GitHub OAuth callback
+router.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login', failureFlash: true }),
+  (req, res) => {
+    res.redirect('/books'); // redirect after successful login
+  }
+);
+
+
 module.exports = router;

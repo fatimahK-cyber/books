@@ -81,6 +81,32 @@ passport.use(
   )
 );
 
+// GitHub OAuth Strategy
+const GitHubStrategy = require('passport-github2').Strategy;
+
+passport.use(new GitHubStrategy({
+    clientID: 'Ov23likleZOaiDIzII8q',
+    clientSecret: 'b0d9a6debc2beb4e2ec8afd89ff90fa7b9cadc4c',
+    callbackURL: 'https://books-q5q7.onrender.com/auth/github/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({ githubId: profile.id }, function(err, user) {
+      if (err) return done(err);
+      if (!user) {
+        const newUser = new User({
+          username: profile.username,
+          displayName: profile.displayName || profile.username,
+          githubId: profile.id
+        });
+        newUser.save(err => done(err, newUser));
+      } else {
+        return done(null, user);
+      }
+    });
+  }
+));
+
+
 //initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
