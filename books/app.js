@@ -72,8 +72,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 
 //path to public folder and node modules
@@ -98,7 +97,7 @@ app.use(function(err, req, res, next) {
 
     res.status(err.status || 500);
     res.render('error', { 
-        title: "Error",  // <-- define title here
+        title: "Error",
         message: err.message, 
         error: err 
     });
